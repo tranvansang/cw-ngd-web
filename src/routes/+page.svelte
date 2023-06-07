@@ -1,11 +1,11 @@
 <script lang="ts">
-	import '../app.css';
-	import {onMount} from 'svelte';
-	import * as d3 from 'd3';
+	import '../app.css'
+	import {onMount} from 'svelte'
+	import * as d3 from 'd3'
 
-	const data = [30, 86, 168, 281, 303, 365];
+	const data = [30, 86, 168, 281, 303, 365]
 
-	let el;
+	let el
 
 	onMount(() => {
 		d3.select(el)
@@ -14,12 +14,12 @@
 			.enter()
 			.append('div')
 			.style('width', function (d) {
-				return d + 'px';
+				return d + 'px'
 			})
 			.text(function (d) {
-				return d;
-			});
-	});
+				return d
+			})
+	})
 </script>
 
 <style lang="postcss">
