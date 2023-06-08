@@ -231,8 +231,14 @@
 			}}>Clear</button>
 		</div>
 		{#each [...fixedColors.entries()] as [condition, color]}
-			<div class="flex gap-1" style="color: {color};">
-				{Object.entries(condition).map(([name, values]) => `${name} (${[...values].join(', ')})`).join(' x ')}
+			<div class="flex gap-1 font-bold text-xl" style="color: {color};">
+				{
+					Object
+						.entries(condition)
+						.filter(([name, values]) => runList.some(run => isRunMatchedCondition(condition, run) && values.has(run.props[name])))
+						.map(([name, values]) => `${name} (${[...values].join(', ')})`)
+						.join(' x ')
+				}
 			</div>
 		{/each}
 	</div>
