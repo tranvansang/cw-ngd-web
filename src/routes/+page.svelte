@@ -128,17 +128,17 @@
 						type="button"
 						class={jcls(
 							'px-2 py-1 rounded-md',
-							filteredRunList.filter(({props}) => props[name] === value).length > 1
-									? jcls(
-										'elevation-4',
-										colorizedProp === name
-											? jcls(
-												bgPalette[allProps[name].indexOf(value)],
-												!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white',
-											)
-											: 'bg-blue-500 text-white'
-									)
-								: 'bg-blue-200 text-gray-500',
+							filteredRunList.filter(({props}) => props[name] === value).length
+								? jcls(
+									'elevation-4',
+									colorizedProp === name
+										? jcls(
+											bgPalette[allProps[name].indexOf(value)],
+											!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white',
+										)
+										: 'bg-blue-500 text-white'
+								)
+								: 'bg-blue-200 text-gray-500'
 						)}
 						on:click={() => {
 						if (selectedPropValues[name].has(value)) selectedPropValues[name].delete(value)
