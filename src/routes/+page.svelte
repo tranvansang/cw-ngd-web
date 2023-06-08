@@ -63,7 +63,7 @@
 			p.enter()
 				.append('path')
 		).attr('fill', 'none')
-			.attr('stroke-width', 1.5)
+			.attr('stroke-width', 1)
 			.attr('d', ({[key]: yList}) => line(yList))
 			.attr('opacity', strokeOpacity)
 			.attr('stroke', ({props}) => colorizedProp ? palette[allProps[colorizedProp].indexOf(props[colorizedProp])] : 'steelblue')
@@ -129,7 +129,6 @@
 						class={jcls(
 							'px-2 py-1 rounded-md',
 							filteredRunList.filter(({props}) => props[name] === value).length > 1
-								? selectedPropValues[name].has(value)
 									? jcls(
 										'elevation-4',
 										colorizedProp === name
@@ -138,7 +137,7 @@
 												!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white',
 											)
 											: 'bg-blue-500 text-white'
-									) : 'bg-blue-300 text-gray-500' // not used
+									)
 								: 'bg-blue-200 text-gray-500',
 						)}
 						on:click={() => {
@@ -180,10 +179,10 @@
 			Max Y: <input bind:value={maxY} type="range" name="maxY" min="0" max="100" step="1"/> ({maxY})
 		</div>
 		<div>
-			Min X: <input bind:value={minX} type="range" name="minX" min="0" max="100" step="1"/> ({minX})
+			Min X: <input bind:value={minX} type="range" name="minX" min="0" max="200" step="1"/> ({minX})
 		</div>
 		<div>
-			Max X: <input bind:value={maxX} type="range" name="maxX" min="0" max="100" step="1"/> ({maxX})
+			Max X: <input bind:value={maxX} type="range" name="maxX" min="0" max="200" step="1"/> ({maxX})
 		</div>
 	</div>
 </div>
