@@ -8,16 +8,18 @@ function parseRun(raw: string) {
 	}
 }
 
+export interface RunPayload {
+	train: number[]
+	val: number[]
+	props: Record<string, string>
+}
+
 export function* gen_run_list(
 	jids: string[],
 	matrix: Record<string, string[]>,
 	props: Record<string, string>,
 	base = 0,
-): Generator<{
-	train: number[]
-	val: number[]
-	props: Record<string, string>
-}, void, unknown> {
+): Generator<RunPayload, void, unknown> {
 	if (Object.keys(matrix).length) {
 		const [key, values] = Object.entries(matrix)[0]
 		for (let i = 0; i < values.length; i++) {

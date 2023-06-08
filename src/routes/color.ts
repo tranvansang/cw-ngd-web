@@ -202,3 +202,17 @@ export const bgPalette = [
 ]
 
 export const lightColors = new Set(['lime'])
+
+// https://matplotlib.org/stable/gallery/color/named_colors.html
+export const tableauPalette = [
+	'#1F77B4', // blue
+	'#FF7F0E', // orange
+	'#2CA02C', // green
+	'#D62728', // red
+	'#9467BD', // purple
+	'#8C564B', // brown
+	'#E377C2', // pink
+	'#7F7F7F', // gray
+	'#BCBD22', // olive
+	'#17BECF', // cyan
+]
