@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "site": "cw-ngd",
+    "public": "build",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
