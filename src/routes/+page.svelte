@@ -138,9 +138,12 @@
 			allProps[key] = values.sort((a, b) => +a - +b)
 		}
 	}
+
+	let selectedPropValues = Object.fromEntries(Object.entries(allProps).map(([key, values]) => [key, new Set(values)]))
+
 	const minX = 0, minY = 0, maxY = 100, maxX = 200
 	// set the dimensions and margins of the graph
-	const margin = {top: 32, right: 30, bottom: 30, left: 60},
+	const margin = {top: 32, right: 8, bottom: 30, left: 32},
 		width = 460 - margin.left - margin.right,
 		height = 400 - margin.top - margin.bottom;
 
@@ -152,8 +155,9 @@
 		// append the svg object to the body of the page
 		const svg = d3.select(elm)
 			.append('svg')
-			.attr('width', width + margin.left + margin.right)
-			.attr('height', height + margin.top + margin.bottom)
+			.attr('viewBox', `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+			// .attr('width', width + margin.left + margin.right)
+			// .attr('height', height + margin.top + margin.bottom)
 			.append('g')
 			.attr('transform', `translate(${margin.left}, ${margin.top})`)
 
@@ -190,43 +194,73 @@
 			.attr('opacity', 0.2)
 			.attr('stroke-width', 1)
 
-		const line = d3.line().x(({x}) => xAxis(x)).y(({y}) => yAxis(y))
+		const group = svg.append('g')
 
-		return {svg, line}
+		return {svg, group, xAxis, yAxis}
 	}
 
-	function drawGraph({svg, line}, yValues) {
+	function drawOneGraph({group, xAxis, yAxis}, graphList) {
+		const line = d3.line()
+			.x((_, x) => xAxis(x))
+			.y(y => yAxis(y))
 		// Add the line
-		svg.append('path')
-			.datum(yValues.map((acc, idx) => ({x: idx, y: acc})))
+		const p = group
+			.selectAll('path')
+			.data(graphList)
+		p.enter()
+			.append('path')
 			.attr('fill', 'none')
 			.attr('stroke', 'steelblue')
 			.attr('stroke-width', 1.5)
 			.attr('d', line)
 			.attr('opacity', 0.7)
+		p.exit()
+			.remove()
 	}
 
-	onMount(() => {
-		const toDraw = runList
-		const trainingFrame = makeChartFrame(trainingChart, 'Training Accuracy')
-		const testingFrame = makeChartFrame(testingChart, 'Testing Accuracy')
+	let trainingFrame, testingFrame
 
-		for (const singleTrain of toDraw) drawGraph(trainingFrame, singleTrain.train)
-		for (const singleTrain of toDraw) drawGraph(testingFrame, singleTrain.val)
+	function drawTwoGraphs() {
+		drawOneGraph(
+			trainingFrame,
+			runList.filter(({props}) => Object.entries(props).every(([key, value]) => selectedPropValues[key].has(value))).map(({train}) => train),
+		)
+		drawOneGraph(
+			testingFrame,
+			runList.filter(({props}) => Object.entries(props).every(([key, value]) => selectedPropValues[key].has(value))).map(({val}) => val)
+		)
+	}
+
+	let mounted
+	$: selectedPropValues, mounted && drawTwoGraphs()
+
+	onMount(() => {
+		trainingFrame = makeChartFrame(trainingChart, 'Training Accuracy')
+		testingFrame = makeChartFrame(testingChart, 'Testing Accuracy')
+		mounted = true
 	})
 </script>
 
-<style lang="postcss">
-	.chart svg {
-		font: 10px sans-serif;
-		background-color: steelblue;
-		text-align: right;
-		padding: 3px;
-		margin: 1px;
-		color: white;
-	}
-</style>
+<div class="flex">
+	<div bind:this={trainingChart} class="[&>svg]:w-full grow basis-0"></div>
+	<div bind:this={testingChart} class="[&>svg]:w-full grow basis-0"></div>
+</div>
 
-<h1>CW NGD Visualization</h1>
-<div bind:this={trainingChart} class="chart"></div>
-<div bind:this={testingChart} class="chart"></div>
+<div class="grid grid-cols-[min-content,auto,min-content,auto] mx-2 gap-1">
+	{#each Object.entries(allProps) as [name, values]}
+		<label for="prop-{name}" class="font-bold">{name}: </label>
+		<div id="prop-{name}" class="flex gap-2">
+			{#each values as value}
+				<button
+					type="button"
+					class="px-1 py-0.5 rounded-md {selectedPropValues[name].has(value) ? 'bg-blue-500 text-white' : 'bg-blue-100 text-gray-500'}"
+					on:click="{() => {
+						if (selectedPropValues[name].has(value)) selectedPropValues[name].delete(value)
+						else selectedPropValues[name].add(value)
+						selectedPropValues = selectedPropValues
+					}}"
+				>{value}</button>
+			{/each}
+		</div>
+	{/each}
+</div>
