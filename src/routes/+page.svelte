@@ -5,6 +5,7 @@
 	import {bgPalette, palette} from './color'
 	import {gen_run_list, rawLoopData} from './dataUtil'
 	import {makeChartFrame} from './d3'
+	import jcls from 'jcls'
 
 	// list
 	const runList = rawLoopData.flatMap(([jids, matrix, props]) => [...gen_run_list(jids, matrix, props)])
@@ -29,10 +30,11 @@
 		}
 	}
 
+	let forcedColorizedProp
 	let selectedPropValues = Object.fromEntries(Object.entries(allProps).map(([key, values]) => [key, new Set(values)]))
 	$: filteredRunList = runList.filter(({props}) => Object.entries(props).every(([key, value]) => selectedPropValues[key].has(value)))
 	// first prop with multiple selected values
-	$: colorizedProp = Object
+	$: colorizedProp = forcedColorizedProp ?? Object
 		.entries(selectedPropValues)
 		.find(
 			(
@@ -74,13 +76,15 @@
 	}
 
 	let mounted
-	$: selectedPropValues, mounted && drawTwoGraphs()
+	$: selectedPropValues, colorizedProp, mounted && drawTwoGraphs()
 
 	onMount(() => {
 		trainingFrame = makeChartFrame(trainingChart, 'Training Accuracy')
 		testingFrame = makeChartFrame(testingChart, 'Testing Accuracy')
 		mounted = true
 	})
+
+	$: allDeselected = Object.values(selectedPropValues).every(s => s.size === 0)
 </script>
 
 <div class="flex">
@@ -88,27 +92,60 @@
 	<div bind:this={testingChart} class="[&>svg]:w-full grow basis-0"></div>
 </div>
 
-<div class="grid grid-cols-[min-content,auto,min-content,auto] mx-2 gap-1">
-	{#each Object.entries(allProps) as [name, values]}
-		<label for="prop-{name}" class="font-bold">{name}: </label>
-		<div id="prop-{name}" class="flex gap-2">
-			{#each values as value}
-				<button
-					type="button"
-					class="px-1 py-0.5 rounded-md {
-					selectedPropValues[name].has(value)
-						? colorizedProp === name
-							? `${bgPalette[allProps[name].indexOf(value)]} text-white`
-							: 'bg-blue-500 text-white'
-						: 'bg-blue-100 text-gray-500'
-					}"
-					on:click="{() => {
+<div class="flex gap-2">
+	<div class="grid grid-cols-[max-content,max-content] mx-2 gap-1">
+		{#each Object.entries(allProps) as [name, values]}
+			<div class="flex gap-1 items-center">
+				<input type="checkbox" on:change={() => {
+				if (forcedColorizedProp === name) forcedColorizedProp = undefined
+				else forcedColorizedProp = name
+			}} checked={forcedColorizedProp === name}/>
+				<label for="prop-{name}" class="font-bold">{name}: </label>
+			</div>
+			<div id="prop-{name}" class="flex gap-2">
+				{#each values as value}
+					<button
+						type="button"
+						class={jcls(
+							'px-2 py-1 rounded-md',
+							filteredRunList.filter(({props}) => props[name] === value).length > 1
+								? selectedPropValues[name].has(value)
+									? jcls(
+										'text-white elevation-4',
+										colorizedProp === name
+											? bgPalette[allProps[name].indexOf(value)]
+											: 'bg-blue-500'
+									) : 'bg-blue-300 text-gray-500' // not used
+								: 'bg-blue-200 text-gray-500',
+						)}
+						on:click={() => {
 						if (selectedPropValues[name].has(value)) selectedPropValues[name].delete(value)
 						else selectedPropValues[name].add(value)
 						selectedPropValues = selectedPropValues
-					}}"
-				>{value}</button>
-			{/each}
-		</div>
-	{/each}
+					}}
+					>{value}</button>
+				{/each}
+			</div>
+		{/each}
+	</div>
+	<div>
+		<button on:click={() => {
+			if (allDeselected) {
+				for (const [name, values] of Object.entries(allProps)) {
+					for (const value of values) {
+						selectedPropValues[name].add(value)
+					}
+				}
+			} else {
+				for (const [name, values] of Object.entries(allProps)) {
+					for (const value of values) {
+						selectedPropValues[name].delete(value)
+					}
+				}
+			}
+			selectedPropValues = selectedPropValues
+		}}>
+			{allDeselected ? 'Select All' : 'De-select All'}
+		</button>
+	</div>
 </div>

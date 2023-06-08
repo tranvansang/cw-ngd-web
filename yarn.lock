@@ -1576,6 +1576,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
+jcls@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/jcls/-/jcls-0.2.5.tgz#1bf8f0cf82689823ac9b300e54b38fd35739b6e3"
+  integrity sha512-5vuoilZKSCIhDdHcnY71DgNeFfXWHQzMuQZf+xEuQOBJQ+5DxverdRopvAV7CH53Zr37O53A0nNjY5k7d40JsA==
+
 jiti@^1.18.2:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.18.2.tgz#80c3ef3d486ebf2450d9335122b32d121f2a83cd"
