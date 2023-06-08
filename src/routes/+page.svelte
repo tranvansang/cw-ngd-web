@@ -145,12 +145,12 @@
 		height = 400 - margin.top - margin.bottom;
 
 
-	let el
+	let trainingChart
+	let testingChart
 
-	onMount(() => {
-		const toDraw = runList
+	function makeChartFrame(elm, title: string) {
 		// append the svg object to the body of the page
-		const svg = d3.select(el)
+		const svg = d3.select(elm)
 			.append('svg')
 			.attr('width', width + margin.left + margin.right)
 			.attr('height', height + margin.top + margin.bottom)
@@ -163,7 +163,7 @@
 			.attr('x', width / 2)
 			.attr('y', 0 - (margin.top / 2))
 			.attr('text-anchor', 'middle')
-			.text('Training Accuracy');
+			.text(title);
 
 		// Add X axis --> it is a date format
 		const xAxis = d3.scaleLinear()
@@ -192,16 +192,27 @@
 
 		const line = d3.line().x(({x}) => xAxis(x)).y(({y}) => yAxis(y))
 
-		for (const singleTrain of toDraw) {
-			// Add the line
-			svg.append('path')
-				.datum(singleTrain.train.map((acc, idx) => ({x: idx, y: acc})))
-				.attr('fill', 'none')
-				.attr('stroke', 'steelblue')
-				.attr('stroke-width', 1.5)
-				.attr('d', line)
-				.attr('opacity', 0.7)
-		}
+		return {svg, line}
+	}
+
+	function drawGraph({svg, line}, yValues) {
+		// Add the line
+		svg.append('path')
+			.datum(yValues.map((acc, idx) => ({x: idx, y: acc})))
+			.attr('fill', 'none')
+			.attr('stroke', 'steelblue')
+			.attr('stroke-width', 1.5)
+			.attr('d', line)
+			.attr('opacity', 0.7)
+	}
+
+	onMount(() => {
+		const toDraw = runList
+		const trainingFrame = makeChartFrame(trainingChart, 'Training Accuracy')
+		const testingFrame = makeChartFrame(testingChart, 'Testing Accuracy')
+
+		for (const singleTrain of toDraw) drawGraph(trainingFrame, singleTrain.train)
+		for (const singleTrain of toDraw) drawGraph(testingFrame, singleTrain.val)
 	})
 </script>
 
@@ -217,4 +228,5 @@
 </style>
 
 <h1>CW NGD Visualization</h1>
-<div bind:this={el} class="chart"></div>
+<div bind:this={trainingChart} class="chart"></div>
+<div bind:this={testingChart} class="chart"></div>
