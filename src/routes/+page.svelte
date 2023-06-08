@@ -2,9 +2,10 @@
 	import '../app.css'
 	import {onMount} from 'svelte'
 	import * as d3 from 'd3'
-	import {bgPalette, palette} from './color'
+	import {bgPalette, lightColors, palette} from './color'
 	import {gen_run_list, rawLoopData} from './dataUtil'
-	import {makeChartFrame} from './d3'
+	import {makeAxes, makeChartFrame} from './d3'
+	import type {ChartPayload} from './d3'
 	import jcls from 'jcls'
 
 	// list
@@ -48,13 +49,14 @@
 
 	let trainingChart
 	let testingChart
+	let strokeOpacity = .7
 
-	function drawOneGraph({group, xAxis, yAxis}, graphList, key) {
+	function drawOneGraph({graphGroup}: ChartPayload, {xAxis, yAxis}, graphList, key) {
 		const line = d3.line()
 			.x((_, x) => xAxis(x))
 			.y(y => yAxis(y))
 		// Add the line
-		const p = group
+		const p = graphGroup
 			.selectAll('path')
 			.data(graphList)
 		p.merge(
@@ -63,24 +65,32 @@
 		).attr('fill', 'none')
 			.attr('stroke-width', 1.5)
 			.attr('d', ({[key]: yList}) => line(yList))
-			.attr('opacity', 0.7)
+			.attr('opacity', strokeOpacity)
 			.attr('stroke', ({props}) => colorizedProp ? palette[allProps[colorizedProp].indexOf(props[colorizedProp])] : 'steelblue')
 		p.exit()
 			.remove()
 	}
 
-	let trainingFrame, testingFrame
+	let trainingFrame, testingFrame, trainAxes, testAxes
 	function drawTwoGraphs() {
-		drawOneGraph(trainingFrame, filteredRunList, 'train')
-		drawOneGraph(testingFrame, filteredRunList, 'val')
+		drawOneGraph(trainingFrame, trainAxes, filteredRunList, 'train')
+		drawOneGraph(testingFrame, testAxes, filteredRunList, 'val')
 	}
 
 	let mounted
-	$: selectedPropValues, colorizedProp, mounted && drawTwoGraphs()
+	let minY = 0, maxY = 100, minX = 0, maxX = 200
+	$: if (minX > maxX) minX = maxX
+	$: if (minY > maxY) minY = maxY
+	function drawAxes() {
+		trainAxes = makeAxes(trainingFrame, {minY, maxY, minX, maxX})
+		testAxes = makeAxes(testingFrame, {minY, maxY, minX, maxX})
+	}
+	$: minY, maxY, minX, maxX, mounted && drawAxes()
+	$: selectedPropValues, colorizedProp, strokeOpacity, trainAxes, testAxes, mounted && drawTwoGraphs()
 
 	onMount(() => {
-		trainingFrame = makeChartFrame(trainingChart, 'Training Accuracy')
-		testingFrame = makeChartFrame(testingChart, 'Testing Accuracy')
+		trainingFrame = makeChartFrame(trainingChart)
+		testingFrame = makeChartFrame(testingChart)
 		mounted = true
 	})
 
@@ -88,8 +98,18 @@
 </script>
 
 <div class="flex">
-	<div bind:this={trainingChart} class="[&>svg]:w-full grow basis-0"></div>
-	<div bind:this={testingChart} class="[&>svg]:w-full grow basis-0"></div>
+	<div class="grow basis-0">
+		<div class="text-center text-4xl">
+			Training Accuracy
+		</div>
+		<div bind:this={trainingChart} class="[&>svg]:w-full"></div>
+	</div>
+	<div class="grow basis-0">
+		<div class="text-center text-4xl">
+			Testing Accuracy
+		</div>
+		<div bind:this={testingChart} class="[&>svg]:w-full"></div>
+	</div>
 </div>
 
 <div class="flex gap-2">
@@ -111,10 +131,13 @@
 							filteredRunList.filter(({props}) => props[name] === value).length > 1
 								? selectedPropValues[name].has(value)
 									? jcls(
-										'text-white elevation-4',
+										'elevation-4',
 										colorizedProp === name
-											? bgPalette[allProps[name].indexOf(value)]
-											: 'bg-blue-500'
+											? jcls(
+												bgPalette[allProps[name].indexOf(value)],
+												!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white',
+											)
+											: 'bg-blue-500 text-white'
 									) : 'bg-blue-300 text-gray-500' // not used
 								: 'bg-blue-200 text-gray-500',
 						)}
@@ -147,5 +170,20 @@
 		}}>
 			{allDeselected ? 'Select All' : 'De-select All'}
 		</button>
+		<div>
+			Opacity: <input bind:value={strokeOpacity} type="range" name="strokeOpacity" min="0" max="1" step="0.05"/> ({strokeOpacity})
+		</div>
+		<div>
+			Min Y: <input bind:value={minY} type="range" name="minY" min="0" max="100" step="1"/> ({minY})
+		</div>
+		<div>
+			Max Y: <input bind:value={maxY} type="range" name="maxY" min="0" max="100" step="1"/> ({maxY})
+		</div>
+		<div>
+			Min X: <input bind:value={minX} type="range" name="minX" min="0" max="100" step="1"/> ({minX})
+		</div>
+		<div>
+			Max X: <input bind:value={maxX} type="range" name="maxX" min="0" max="100" step="1"/> ({maxX})
+		</div>
 	</div>
 </div>

@@ -1,12 +1,11 @@
 import * as d3 from 'd3'
 
-export function makeChartFrame(elm, title: string) {
-	const minX = 0, minY = 0, maxY = 100, maxX = 200
-	// set the dimensions and margins of the graph
-	const margin = {top: 32, right: 8, bottom: 30, left: 32},
-		width = 460 - margin.left - margin.right,
-		height = 400 - margin.top - margin.bottom;
+const margin = {top: 10, right: 8, bottom: 30, left: 32},
+	width = 460 - margin.left - margin.right,
+	height = 390 - margin.top - margin.bottom;
 
+export function makeChartFrame(elm: SVGElement) {
+	// set the dimensions and margins of the graph
 	// append the svg object to the body of the page
 	const svg = d3.select(elm)
 		.append('svg')
@@ -16,32 +15,37 @@ export function makeChartFrame(elm, title: string) {
 		.append('g')
 		.attr('transform', `translate(${margin.left}, ${margin.top})`)
 
-	// add title
-	svg.append('text')
-		.attr('class', 'title')
-		.attr('x', width / 2)
-		.attr('y', 0 - (margin.top / 2))
-		.attr('text-anchor', 'middle')
-		.text(title);
+	// // add title
+	// svg.append('text')
+	// 	.attr('x', width / 2)
+	// 	.attr('y', 0 - (margin.top / 2))
+	// 	.attr('text-anchor', 'middle')
+	// 	.text(title);
 
-	// Add X axis --> it is a date format
-	const xAxis = d3.scaleLinear()
-		.domain([minX, maxX])
-		.range([0, width]);
-	svg.append('g')
-		.attr('transform', `translate(0, ${height})`)
-		.call(d3.axisBottom(xAxis));
+	const graphGroup = svg.append('g')
+	const axesGroup = svg.append('g')
 
+	return {svg, graphGroup, axesGroup}
+}
+
+export type ChartPayload = ReturnType<typeof makeChartFrame>
+
+function createOrUpdate(g, name) {
+	return g.select(`.${name}`).empty()
+		? g.append('g').attr('class', name)
+		: g.select(`.${name}`)
+}
+
+export function makeAxes({axesGroup}: ChartPayload, {minY, maxY, minX, maxX}: Record<string, number>) {
 	// Add Y axis
 	const yAxis = d3.scaleLinear()
 		.domain([minY, maxY])
 		.range([height, 0]);
-	svg.append('g')
+	createOrUpdate(axesGroup, 'y-axis')
 		.call(d3.axisLeft(yAxis));
 
 	// add y gridlines
-	svg.append('g')
-		.attr('class', 'grid')
+	createOrUpdate(axesGroup, 'y-gridlines')
 		.call(d3.axisLeft(yAxis)
 			.tickSize(-width)
 			.tickFormat('' as any)
@@ -49,7 +53,13 @@ export function makeChartFrame(elm, title: string) {
 		.attr('opacity', 0.2)
 		.attr('stroke-width', 1)
 
-	const group = svg.append('g')
+	// Add X axis
+	const xAxis = d3.scaleLinear()
+		.domain([minX, maxX])
+		.range([0, width]);
+	createOrUpdate(axesGroup, 'x-axis')
+		.attr('transform', `translate(0, ${height})`)
+		.call(d3.axisBottom(xAxis));
 
-	return {svg, group, xAxis, yAxis}
+	return {xAxis, yAxis}
 }
