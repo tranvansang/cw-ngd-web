@@ -344,6 +344,19 @@
 	}
 
 	let selectedPropValues = Object.fromEntries(Object.entries(allProps).map(([key, values]) => [key, new Set(values)]))
+	$: filteredRunList = runList.filter(({props}) => Object.entries(props).every(([key, value]) => selectedPropValues[key].has(value)))
+	// first prop with multiple selected values
+	$: colorizedProp = Object
+		.entries(selectedPropValues)
+		.find(
+			(
+				[name, values]
+				// there are at least 2 values with each having at least 1 run
+			) => [...values].filter(
+				v => filteredRunList.some(({props}) => props[name] === v)
+			).length > 1
+		)?.[0]
+	// colorize by the index in the original list of prop values, to keep the same color for the same value
 
 	const minX = 0, minY = 0, maxY = 100, maxX = 200
 	// set the dimensions and margins of the graph
@@ -403,10 +416,6 @@
 		return {svg, group, xAxis, yAxis}
 	}
 
-	// first prop with multiple selected values
-	$: colorizedProp = Object.entries(selectedPropValues).find(([_, values]) => values.size > 1)?.[0]
-	// colorize by the index in the original list of prop values, to keep the same color for the same value
-
 	function drawOneGraph({group, xAxis, yAxis}, graphList, key) {
 		const line = d3.line()
 			.x((_, x) => xAxis(x))
@@ -415,9 +424,10 @@
 		const p = group
 			.selectAll('path')
 			.data(graphList)
-		p.enter()
-			.append('path')
-			.attr('fill', 'none')
+		p.merge(
+			p.enter()
+				.append('path')
+		).attr('fill', 'none')
 			.attr('stroke-width', 1.5)
 			.attr('d', ({[key]: yList}) => line(yList))
 			.attr('opacity', 0.7)
@@ -428,7 +438,6 @@
 
 	let trainingFrame, testingFrame
 	function drawTwoGraphs() {
-		const filteredRunList = runList.filter(({props}) => Object.entries(props).every(([key, value]) => selectedPropValues[key].has(value)))
 		drawOneGraph(trainingFrame, filteredRunList, 'train')
 		drawOneGraph(testingFrame, filteredRunList, 'val')
 	}
