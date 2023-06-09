@@ -113,4 +113,17 @@ export const rawLoopData = [
 		},
 		{optimizer: 'kfac'}
 	],
+	[
+		[
+			// all models: optimizer(4) x model(6)
+			'2006071', // kfac_0
+			'2006072', // kfac_1
+			'2006073', // kfac_2
+		],
+		{
+			optimizer: ['msgd', 'adam', 'cwngd', 'kfac'],
+			model: ['resnet20', 'resnet32', 'resnet44', 'resnet56', 'resnet110', 'resnet1202'],
+		},
+		{}
+	]
 ]
