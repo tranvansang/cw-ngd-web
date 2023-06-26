@@ -67,18 +67,18 @@ export const rawLoopData = [
 	[
 		[
 			//cwngd: momentum(3) x lr(4) x damping(4)
-			'1997882', // cwngd_0
-			'1997883', // cwngd_1
-			'1997884', // cwngd_2
-			'1997885', // cwngd_3
-			'1997886', // cwngd_4
-			'1997887', // cwngd_5
-			'1997888', // cwngd_6
-			'1997889', // cwngd_7
-			'1997890', // cwngd_8
-			'1997891', // cwngd_9
-			'1997892', // cwngd_10
-			'1997893', // cwngd_11
+			'2043975', // cwngd_0
+			'2043976', // cwngd_1
+			'2043977', // cwngd_2
+			'2043978', // cwngd_3
+			'2043979', // cwngd_4
+			'2043980', // cwngd_5
+			'2043981', // cwngd_6
+			'2043982', // cwngd_7
+			'2043983', // cwngd_8
+			'2043984', // cwngd_9
+			'2043985', // cwngd_10
+			'2043986', // cwngd_11
 		],
 		{
 			weightDecay: ['0', '1e-4'],
