@@ -3,10 +3,10 @@
 	import {onMount} from 'svelte'
 	import * as d3 from 'd3'
 	import {bgPalette, lightColors, palette, tableauPalette} from './color'
-	import {gen_run_list, rawLoopData} from './dataUtil'
 	import type {RunPayload} from './dataUtil'
-	import {makeAxes, makeChartFrame} from './d3'
+	import {gen_run_list, rawLoopData} from './dataUtil'
 	import type {ChartPayload} from './d3'
+	import {makeAxes, makeChartFrame} from './d3'
 	import jcls from 'jcls'
 
 	// list
@@ -53,8 +53,9 @@
 		)?.[0]
 	// colorize by the index in the original list of prop values, to keep the same color for the same value
 
-	let showFixedColors = true
-	let fixedColors = new Map<Condition, string>()
+	let fixedColors = new Map<Condition, [string, boolean]>()
+	$: fixedColorAllShown = [...fixedColors.values()].every(([, shown]) => shown)
+
 	function getFixedColorOfRun(run) {
 		return [...fixedColors.entries()].find(([condition]) => isRunMatchedCondition(condition, run))?.[1]
 	}
@@ -78,7 +79,7 @@
 			.attr('stroke-width', 1)
 			.attr('d', ({[key]: yList}) => line(yList))
 			.attr('opacity', strokeOpacity)
-			.attr('stroke', run => getFixedColorOfRun(run) ?? (colorizedProp
+			.attr('stroke', run => getFixedColorOfRun(run)?.[0] ?? (colorizedProp
 				? palette[allProps[colorizedProp].indexOf(run.props[colorizedProp])]
 				: 'steelblue')
 			)
@@ -90,8 +91,9 @@
 	function drawTwoGraphs() {
 		const withFixedColors = new Set(filteredRunList)
 		for (const run of runList) {
-			if (getFixedColorOfRun(run)) {
-				if (showFixedColors) withFixedColors.add(run)
+			const fixedColor = getFixedColorOfRun(run)
+			if (fixedColor) {
+				if (fixedColor[1]) withFixedColors.add(run)
 				else withFixedColors.delete(run)
 			}
 		}
@@ -108,7 +110,7 @@
 		testAxes = makeAxes(testingFrame, {minY, maxY, minX, maxX})
 	}
 	$: minY, maxY, minX, maxX, mounted && drawAxes()
-	$: selectedPropValues, colorizedProp, strokeOpacity, trainAxes, testAxes, showFixedColors, fixedColors, mounted && drawTwoGraphs()
+	$: selectedPropValues, colorizedProp, strokeOpacity, trainAxes, testAxes, fixedColorAllShown, fixedColors, mounted && drawTwoGraphs()
 
 	onMount(() => {
 		trainingFrame = makeChartFrame(trainingChart)
@@ -188,7 +190,7 @@
 				}
 			}
 			selectedPropValues = selectedPropValues
-		}}>
+		}} class="elevation-4">
 			{allDeselected ? 'Select All' : 'De-select All'}
 		</button>
 		<div>
@@ -213,7 +215,7 @@
 			// get new color
 			function getColor() {
 				outer: for (const color of tableauPalette) {
-					for (const fixedColor of fixedColors.values()) {
+					for (const [fixedColor] of fixedColors.values()) {
 						if (color === fixedColor) continue outer
 					}
 					return color
@@ -221,24 +223,39 @@
 			}
 			const color = getColor() ?? tableauPalette[0]
 			const condition = Object.fromEntries(Object.entries(selectedPropValues).map(([name, values]) => [name, new Set(values)]))
-			fixedColors.set(condition, color)
+			fixedColors.set(condition, [color, true])
 			fixedColors = fixedColors
-		}} disabled={!filteredRunList.filter(run => !getFixedColorOfRun(run)).length}>Add</button>
-			<button type="button" on:click={() => showFixedColors = !showFixedColors}>{showFixedColors ? 'Hide' : 'Show'}</button>
+		}} disabled={!filteredRunList.filter(run => !getFixedColorOfRun(run)).length} class="elevation-4">Add</button>
+			<button type="button" on:click={() => {
+				for (const [condition, [color,]]of fixedColors.entries()) {
+					fixedColors.set(condition, [color, !fixedColorAllShown])
+				}
+				fixedColors = fixedColors
+			}} class="elevation-4">{fixedColorAllShown ? 'Hide' : 'Show'}</button>
 			<button type="button" on:click={() => {
 				fixedColors.clear()
 				fixedColors = fixedColors
-			}}>Clear</button>
+			}} class="elevation-4">Clear</button>
 		</div>
-		{#each [...fixedColors.entries()] as [condition, color]}
-			<div class="flex gap-1 font-bold text-xl" style="color: {color};">
-				{
-					Object
-						.entries(condition)
-						.filter(([name, values]) => runList.some(run => isRunMatchedCondition(condition, run) && values.has(run.props[name])))
-						.map(([name, values]) => `${name} (${[...values].join(', ')})`)
-						.join(' x ')
-				}
+		{#each [...fixedColors.entries()] as [condition, [color, show]]}
+			<div class="flex gap-2 items-center">
+				<button type="button" class="text-2xl" on:click={() => {
+					fixedColors.delete(condition)
+					fixedColors = fixedColors
+				}}>x</button>
+				<input type="checkbox" class="-mb-[.25rem]" on:change={() => {
+				fixedColors.set(condition, [color, !show])
+				fixedColors = fixedColors
+			}} checked={show}/>
+				<div class="font-bold text-xl" style="color: {color};">
+					{
+						Object
+							.entries(condition)
+							.filter(([name, values]) => runList.some(run => isRunMatchedCondition(condition, run) && values.has(run.props[name])))
+							.map(([name, values]) => `${name} (${[...values].join(', ')})`)
+							.join(' x ')
+					}
+				</div>
 			</div>
 		{/each}
 	</div>
