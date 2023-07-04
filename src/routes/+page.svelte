@@ -137,8 +137,16 @@
 </div>
 
 <div class="flex gap-2">
-	<div class="grid grid-cols-[max-content,max-content] mx-2 gap-1">
+	<div class="grid grid-cols-[repeat(3,max-content)] mx-2 gap-x-2 gap-y-1">
 		{#each Object.entries(allProps) as [name, values]}
+			<button type="button" on:click={() => {
+				if (selectedPropValues[name].size === 0) {
+					selectedPropValues[name] = new Set(values)
+				} else {
+					selectedPropValues[name].clear()
+				}
+				selectedPropValues = selectedPropValues
+			}}>{ selectedPropValues[name].size ? 'x' : 'v' }</button>
 			<div class="flex gap-1 items-center">
 				<input type="checkbox" on:change={() => {
 				if (forcedColorizedProp === name) forcedColorizedProp = undefined
@@ -162,7 +170,7 @@
 												(!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white')
 											)
 											: 'bg-blue-500 text-white'
-										: 'bg-blue-500 text-red-400' // no data of this filter
+										: 'bg-blue-500 text-red-300' // no data of this filter
 								)
 								: 'bg-blue-200 text-white'
 						)}
