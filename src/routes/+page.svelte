@@ -10,7 +10,7 @@
 	import jcls from 'jcls'
 
 	// list
-	const runList = rawLoopData.flatMap(([jids, matrix, props]) => [...gen_run_list(jids, matrix, props)])
+	const runList = rawLoopData.flatMap(([jids, matrix, props = {}]) => [...gen_run_list(jids, matrix, props)])
 
 	type Condition = Record<string, Set<string>>
 

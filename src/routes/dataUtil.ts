@@ -39,139 +39,218 @@ export function* gen_run_list(
 }
 
 export const rawLoopData = [
-	[
-		[
-			//msgd: momentum(3) x lr(4)
-			'2071790', // msgd_0
-			'2071791', // msgd_1
-			'2071792', // msgd_1
-		],
-		{
-			weightDecay: ['0', '1e-4'],
-			momentum: ['0', '0.9', '0.99'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-		},
-		{optimizer: 'msgd'}
-	],
-	[
-		[
-			// #adam: weight_decay(2) x lr(4)
-			'2071793', // adam_0
-		],
-		{
-			weightDecay: ['0', '1e-4'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-		},
-		{optimizer: 'adam'}
-	],
-	[
-		[
-			// #cwngd: weight_decay(2) x momentum(3) x lr(4) x damping(4)
-			'2071746', // cwngd_0
-			'2071747', // cwngd_1
-			'2071748', // cwngd_2
-			'2071749', // cwngd_3
-			'2071750', // cwngd_4
-			'2071751', // cwngd_5
-			'2071752', // cwngd_6
-			'2071753', // cwngd_7
-			'2071754', // cwngd_8
-			'2071755', // cwngd_9
-			'2071756', // cwngd_10
-			'2071757', // cwngd_11
-
-			'2073860', // # cwngd_0
-			'2073861', // # cwngd_1
-			'2073862', // # cwngd_2
-			'2073863', // # cwngd_3
-			'2073864', // # cwngd_4
-			'2073865', // # cwngd_5
-			'2073866', // # cwngd_6
-			'2073867', // # cwngd_7
-			'2073868', // # cwngd_8
-			'2073869', // # cwngd_9
-			'2073870', // # cwngd_10
-			'2073871', // # cwngd_11
-		],
-		{
-			strategy: ['inout', 'out'],
-			weightDecay: ['0', '1e-4'],
-			momentum: ['0', '0.9', '0.99'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
-		},
-		{optimizer: 'cwngd'}
-	],
-	[
-		[
-			//#kfac: weight_decay(2) x momentum(2) x lr(3) x damping(4)
-			'2073926', // kfac_0
-			'2073927', // kfac_1
-			'2073928', // kfac_2
-			'2073929', // kfac_3
-			'2073930', // kfac_4
-			'2073931', // kfac_5
-			'2073932', // kfac_6
-			'2073933', // kfac_7
-			'2073934', // kfac_8
-			'2073935', // kfac_9
-			'2073936', // kfac_10
-			'2073937', // kfac_11
-		],
-		{
-			weightDecay: ['0', '1e-4'],
-			// clipping: ['0', '1e-1'],
-			momentum: ['0', '0.9'],
-			learningRate: ['1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
-		},
-		{optimizer: 'kfac'}
-	],
-	[
-		// #Date label: 2023-06-29_16-49-27
-// #git: 2127164e728965fc00c0ba0b5c5543a6494abd5b
-// #cwngd (adam-ngd): weight_decay(2) x lr(4) x damping(4)
-		[
-			'2078092', // cwngd_0
-			'2078093', // cwngd_1
-			'2078094', // cwngd_2
-			'2078095', // cwngd_3
-		],
-		{
-			weightDecay: ['0', '1e-4'],
-			// clipping: ['0', '1e-1'],
-			// momentum: ['0', '0.9'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
-		},
-		{optimizer: 'adam-ngd'}
-	],
-
-// #Date label: 2023-06-29_19-09-53
-// #git: b075c278a3bd0bb5b9cc805c4b9061c27d95aaca
-// #cwngd (temp rollback to bs scaling): lr(4) x damping(4)
-	[
-		[
-			'2083860', // cwngd_0
-			'2083861', // cwngd_1
-		],
-		{
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
-		},
-		{optimizer: 'cwngd-old-behavior'}
-	]
 	// [
 	// 	[
-	// 		// all models: optimizer(4) x model(6)
-	// 		'2006071', // kfac_0
-	// 		'2006072', // kfac_1
-	// 		'2006073', // kfac_2
+	// 		//msgd: momentum(3) x lr(4)
+	// 		'2071790', // msgd_0
+	// 		'2071791', // msgd_1
+	// 		'2071792', // msgd_1
 	// 	],
 	// 	{
-	// 		optimizer: ['msgd', 'adam', 'cwngd', 'kfac'],
-	// 		model: ['resnet20', 'resnet32', 'resnet44', 'resnet56', 'resnet110', 'resnet1202'],
+	// 		weightDecay: ['0', '1e-4'],
+	// 		momentum: ['0', '0.9', '0.99'],
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 	// 	},
-	// 	{}
-	// ]
+	// 	{optimizer: 'msgd'}
+	// ],
+	// [
+	// 	[
+	// 		// #adam: weight_decay(2) x lr(4)
+	// 		'2071793', // adam_0
+	// 	],
+	// 	{
+	// 		weightDecay: ['0', '1e-4'],
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 	},
+	// 	{optimizer: 'adam'}
+	// ],
+	// [
+	// 	[
+	// 		'2093571', // cwngd_0
+	// 		'2093572', // cwngd_1
+	// 	],
+	// 	{
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// 	{optimizer: 'cwngd-simplified'}
+	// ],
+	// [
+	// 	[
+	// 		'2093595', // cwngd_0
+	// 		'2093597', // cwngd_1
+	// 	],
+	// 	{
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// 	{optimizer: 'adam-ngd'}
+	// ],
+	// [
+	// 	[
+	// 		'2095114',
+	// 		'2095115',
+	// 	],
+	// 	{
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// 	{optimizer: 'kfac'}
+	// ],
+	// [
+	// 	[
+	// 		'2095637',
+	// 		'2095638',
+	// 	],
+	// 	{
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// 	{optimizer: 'cwngd (fullbackward, old resnet)'}
+	// ],
+	// [
+	// 	[
+	// 		'2097702',
+	// 		'2097703',
+	// 	],
+	// 	{
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// 	{optimizer: 'cwngd (out-node, fullbackward)'}
+	// ],
+	// [
+	// 	[
+	// 		'2097739',
+	// 		'2097740',
+	// 	],
+	// 	{
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// 	{optimizer: 'cwngd (full vmap)'}
+	// ],
+	//
+
+	// #optimizer with damping: optimizer(2) x batch_size(3) x lr(4) x damping(4)
+	[
+		[
+			'2099069', // # run_1_0
+			'2099070', // # run_1_1
+			'2099071', // # run_1_2
+			'2099072', // # run_1_3
+			'2099073', // # run_1_4
+			'2099074', // # run_1_5
+			'2099075', // # run_1_6
+			'2099076', // # run_1_7
+			'2099077', // # run_1_8
+			'2099078', // # run_1_9
+			'2099079', // # run_1_10
+			'2099080', // # run_1_11
+		],
+		{
+			optimizer: ['cwngd', 'kfac'],
+			batch_size: ['128', '512', '1024'],
+			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+		},
+	],
+	// #optimizer without damping: optimizer(2) x batch_size(3) x lr(4)
+	[
+		[
+			'2099081', // # run_2_0
+			'2099082', // # run_2_1
+			'2099083', // # run_2_2
+		],
+		{
+			optimizer: ['adam', 'sgd'],
+			batch_size: ['128', '512', '1024'],
+			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+		},
+	],
+	// // #cwngd old behavior: batch_size(3) x lr(4) x damping(4)
+	// [
+	// 	[
+	// 		'2099385', //# run_1_0
+	// 		'2099386', //# run_1_1
+	// 		'2099387', //# run_1_2
+	// 		'2099388', //# run_1_3
+	// 		'2099389', //# run_1_4
+	// 		'2099390', //# run_1_5
+	// 	],
+	// 	{
+	// 		optimizer: ['cwngd old behavior'],
+	// 		batch_size: ['128', '512', '1024'],
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// ],
+	// #cwngd old with correct backprops: batch_size(3) x lr(4) x damping(4)
+	// [
+	// 	[
+	// 		'2099413', // # run_1_0
+	// 		'2099414', // # run_1_1
+	// 		'2099415', // # run_1_2
+	// 		'2099416', // # run_1_3
+	// 		'2099417', // # run_1_4
+	// 		'2099418', // # run_1_5
+	// 	],
+	// 	{
+	// 		optimizer: ['cwngd old correct backprops'],
+	// 		batch_size: ['128', '512', '1024'],
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// ],
+
+	// [
+	// 	[
+	// 		'2100656', //# run_1_0
+	// 		'2100657', //# run_1_1
+	// 		'2100658', //# run_1_2
+	// 		'2100659', //# run_1_3
+	// 		'2100660', //# run_1_4
+	// 		'2100661', //# run_1_5
+	// 	],
+	// 	{
+	// 		optimizer: ['cwngd annealing'],
+	// 		batch_size: ['128', '512', '1024'],
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+	// 	},
+	// ],
+
+	// #Date label: 2023-07-03_18-58-04
+// #git: 3a3e99983e93777a858adcd505bdf8cafe73baae
+// #cwngd massive lr and damping: lr(9) x damping(9)
+	[
+		[
+			'2103276', // # run_0
+			'2103277', // # run_1
+			'2103278', // # run_2
+			'2103279', // # run_3
+			'2103280', // # run_4
+			'2103281', // # run_5
+			'2103282', // # run_6
+			'2103283', // # run_7
+			'2103284', // # run_8
+			'2103285', // # run_9
+			'2103286', // # run_10
+		],
+		{
+			optimizer: ['cwngd annealing'],
+			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
+			damping: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
+		}
+	],
+	[
+		[
+			'2103341', // # run_0
+		],
+		{
+			optimizer: ['sgd', 'adam'],
+			learningRate: ['1', '10', '100', '1000'],
+		}
+	],
+
 ]
