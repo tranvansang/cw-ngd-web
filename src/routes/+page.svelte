@@ -152,17 +152,19 @@
 						type="button"
 						class={jcls(
 							'px-2 py-1 rounded-md',
-							filteredRunList.filter(({props}) => props[name] === value).length
+							selectedPropValues[name].has(value)
 								? jcls(
 									'elevation-4',
-									colorizedProp === name
-										? jcls(
-											bgPalette[allProps[name].indexOf(value)],
-											!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white',
-										)
-										: 'bg-blue-500 text-white'
+									filteredRunList.filter(({props}) => props[name] === value).length // we check if there is any run with this value first and force the color to be blue. Because if there is no run with this value, there is no need to colorize it.
+										? colorizedProp === name
+											? jcls(
+												bgPalette[allProps[name].indexOf(value)],
+												(!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white')
+											)
+											: 'bg-blue-500 text-white'
+										: 'bg-blue-500 text-red-400' // no data of this filter
 								)
-								: 'bg-blue-200 text-gray-500'
+								: 'bg-blue-200 text-white'
 						)}
 						on:click={() => {
 						if (selectedPropValues[name].has(value)) selectedPropValues[name].delete(value)
