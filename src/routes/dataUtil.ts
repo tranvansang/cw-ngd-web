@@ -31,8 +31,9 @@ export function* gen_run_list(
 			)
 		}
 	} else {
-		yield {
-			...parseRun(rawData[jids[base >> 3]][base & 7]),
+		const data = rawData[jids[base >> 3]]?.[base & 7]
+		if (data) yield {
+			...parseRun(data),
 			props,
 		}
 	}
@@ -272,6 +273,7 @@ export const rawLoopData = [
 			'2114271', // # run_15
 		],
 		{
+			dataset: ['cifar10'],
 			optimizer: ['cwngd'],
 			damping: ['1e-6', '1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10'],
 			batch_size: ['32', '64', '128', '1024'],
@@ -290,9 +292,68 @@ export const rawLoopData = [
 			'2117913', // # run_7
 		],
 		{
+			dataset: ['cifar10'],
+			batch_size: ['32'],
 			optimizer: ['kfac', 'adam', 'sgd'],
-			batch_size: ['32', '64', '128', '1024'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
 	],
+
+	[
+		[
+			'2123117', // # run_0
+			'2123118', // # run_1
+			'2123119', // # run_2
+			'2123120', // # run_3
+		],
+		{
+			dataset: ['cifar100'],
+			optimizer: ['cwngd'],
+			batch_size: ['32', '64', '128', '1024'],
+			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1'],
+			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
+		}
+	],
+	[
+		[
+			'2125247', // # run_0
+		],
+		{
+			dataset: ['cifar100-resnet'],
+			optimizer: ['cwngd'],
+			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
+		}
+	],
+	// [
+	// 	[
+	// 		'2125248', // # run_0
+	// 		'2125249'
+	// 	],
+	// 	{
+	// 		dataset: ['cifar100-resnet'],
+	// 		optimizer: ['kfac', 'adam', 'sgd'],
+	// 		learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
+	// 	}
+	// ],
+	[
+		[
+			'2125319 ', // # run_0
+		],
+		{
+			dataset: ['stl10'],
+			optimizer: ['cwngd'],
+			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
+		}
+	],
+	// [
+	// 	[
+	// 		'2125320', // # run_0
+	// 		'2125321'
+	// 	],
+	// 	{
+	// 		dataset: ['stl10'],
+	// 		optimizer: ['kfac', 'adam', 'sgd'],
+	// 		learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
+	// 	}
+	// ],
 ]
