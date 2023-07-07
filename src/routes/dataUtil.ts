@@ -51,6 +51,8 @@ export const rawLoopData = [
 		],
 		{
 			optimizer: ['sgd'],
+			dataset: ['cifar10'],
+			batchSize: ['128'],
 			weightDecay: ['0', '1e-4'],
 			momentum: ['0', '0.9', '0.99'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
@@ -65,6 +67,8 @@ export const rawLoopData = [
 		],
 		{
 			optimizer: ['adam'],
+			dataset: ['cifar10'],
+			batchSize: ['128'],
 			weightDecay: ['0', '1e-4'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 		},
@@ -73,20 +77,24 @@ export const rawLoopData = [
 	// Date label: 2023-07-01_17-28-47
 // git: f8ec2465dd9fde1621b48976f9cf1c83a2ae017b
 // cwngd (simplify grad per sample): lr(4) x damping(4)
+	// loss v1: sum, backprops: no scaled up, lls: mean, damping no scaling
 	[
 		[
 			'2093571', // cwngd_0
 			'2093572', // cwngd_1
 		],
 		{
-			optimizer: ['cwngd-simplified'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+			optimizer: ['cwngd'],
+			dataset: ['cifar10'],
+			batchSize: ['128'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
+			damping: ['1e-3/bs^2', '1e-4/bs^2', '1e-5/bs^2', '1e-6/bs^2'],
 		},
 	],
 	// Date label: 2023-07-01_17-38-28
 // git: 5b4502ea2a638e4ebc8d24c080d43a7627f7ec7f
 // cwngd (try adam-ngd): lr(4) x damping(4)
+	// loss v1: sum, backprops: no scaled up, lls: mean, damping no scaling
 	[
 		[
 			'2093595', // cwngd_0
@@ -94,8 +102,10 @@ export const rawLoopData = [
 		],
 		{
 			optimizer: ['adam-ngd'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+			dataset: ['cifar10'],
+			batchSize: ['128'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
+			damping: ['1e-3/bs^2', '1e-4/bs^2', '1e-5/bs^2', '1e-6/bs^2'],
 		},
 	],
 	// Date label: 2023-07-01_23-17-42
@@ -108,6 +118,8 @@ export const rawLoopData = [
 		],
 		{
 			optimizer: ['kfac'],
+			dataset: ['cifar10'],
+			batchSize: ['128'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
@@ -115,15 +127,18 @@ export const rawLoopData = [
 	// Date label: 2023-07-02_01-01-31
 // git: 411a734a8e322cd12903532255d2c70db06f789f
 // cwngd (old resnet full backward hook): lr(4) x damping(4)
+	// loss v1: sum, backprops: no scaled up, lls: mean, damping no scaling
 	[
 		[
 			'2095637',
 			'2095638',
 		],
 		{
-			optimizer: ['cwngd (fullbackward, old resnet)'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+			optimizer: ['cwngd'],
+			dataset: ['cifar10 (resnet18-old model)'],
+			batchSize: ['128'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
+			damping: ['1e-3/bs^2', '1e-4/bs^2', '1e-5/bs^2', '1e-6/bs^2'],
 		},
 	],
 	// Date label: 2023-07-02_10-47-32
@@ -135,14 +150,17 @@ export const rawLoopData = [
 			'2097703',
 		],
 		{
-			optimizer: ['cwngd (out-node, fullbackward)'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+			optimizer: ['cwngd (out-node)'],
+			dataset: ['cifar10'],
+			batchSize: ['128'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
+			damping: ['1e-3/bs^2', '1e-4/bs^2', '1e-5/bs^2', '1e-6/bs^2'],
 		},
 	],
 	// Date label: 2023-07-02_10-59-58
 // git: 8ecb97c6fed74a9023661b14032fa07b5c7adb4d
 // cwngd (full vmap): lr(4) x damping(4)
+	// loss v1: sum, backprops: no scaled up, lls: mean, damping no scaling
 	[
 		[
 			'2097739',
@@ -150,8 +168,10 @@ export const rawLoopData = [
 		],
 		{
 			optimizer: ['cwngd (full vmap)'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+			dataset: ['cifar10'],
+			batchSize: ['128'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
+			damping: ['1e-3/bs^2', '1e-4/bs^2', '1e-5/bs^2', '1e-6/bs^2'],
 		},
 	],
 
@@ -159,6 +179,7 @@ export const rawLoopData = [
 	// Date label: 2023-07-03_01-04-42
 // git: d4d3a5683982772d229447d4c784aca5efbe39ba
 // optimizer with damping: optimizer(2) x batch_size(3) x lr(4) x damping(4)
+	// loss v1: sum, backprops: no scaled up, lls: mean, damping no scaling
 	[
 		[
 			'2099069', // # run_1_0
@@ -167,6 +188,17 @@ export const rawLoopData = [
 			'2099072', // # run_1_3
 			'2099073', // # run_1_4
 			'2099074', // # run_1_5
+		],
+		{
+			dataset: ['cifar10'],
+			optimizer: ['cwngd'],
+			batchSize: ['128', '512', '1024'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
+			damping: ['1e-3/bs^2', '1e-4/bs^2', '1e-5/bs^2', '1e-6/bs^2'],
+		},
+	],
+	[
+		[
 			'2099075', // # run_1_6
 			'2099076', // # run_1_7
 			'2099077', // # run_1_8
@@ -175,8 +207,9 @@ export const rawLoopData = [
 			'2099080', // # run_1_11
 		],
 		{
-			optimizer: ['cwngd', 'kfac'],
-			batch_size: ['128', '512', '1024'],
+			dataset: ['cifar10'],
+			optimizer: ['kfac'],
+			batchSize: ['128', '512', '1024'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
@@ -191,14 +224,16 @@ export const rawLoopData = [
 			'2099083', // # run_2_2
 		],
 		{
+			dataset: ['cifar10'],
 			optimizer: ['adam', 'sgd'],
-			batch_size: ['128', '512', '1024'],
+			batchSize: ['128', '512', '1024'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 		},
 	],
 	// Date label: 2023-07-03_08-48-48
 // git: 01093ef7bf418fb3c0373bbfff83056b0f2ae4f1
 // cwngd old behavior: batch_size(3) x lr(4) x damping(4)
+	// loss v2: avg, backprops: scaled by bs, lls: sum, damping scaled up by bs^2
 	[
 		[
 			'2099385', //# run_1_0
@@ -209,15 +244,17 @@ export const rawLoopData = [
 			'2099390', //# run_1_5
 		],
 		{
-			optimizer: ['cwngd old behavior'],
-			batch_size: ['128', '512', '1024'],
+			dataset: ['cifar10'],
+			optimizer: ['cwngd'],
+			batchSize: ['128', '512', '1024'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+			damping: ['e-3', 'e-4', 'e-5', 'e-6'],
 		},
 	],
 	// Date label: 2023-07-03_09-18-51
 // git: e7b0ef10cdc3a5c20c2ba544b6cfdf52f2436fce
 // cwngd old with correct backprops: batch_size(3) x lr(4) x damping(4)
+	// loss v3: avg, backprops: no scale, lls: sum, damping scaled up by bs^2
 	[
 		[
 			'2099413', // # run_1_0
@@ -228,16 +265,18 @@ export const rawLoopData = [
 			'2099418', // # run_1_5
 		],
 		{
-			optimizer: ['cwngd old correct backprops'],
-			batch_size: ['128', '512', '1024'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
+			dataset: ['cifar10'],
+			optimizer: ['cwngd'],
+			batchSize: ['128', '512', '1024'],
+			learningRate: ['bs e-4', 'bs e-3', 'bs e-2', 'bs e-1'],
+			damping: ['bs^2e-3', 'bs^2e-4', 'bs^2e-5', 'bs^2e-6'],
 		},
 	],
 
 	// Date label: 2023-07-03_12-34-33
 // git: 92372a78eb515fbbb45d48c3e76975d3f3c01871
 // cwngd annealing: batch_size(3) x lr(4) x damping(4)
+	// loss v4: sum, backprops: no scale, lls: mean, damping scaled up by bs^2
 	[
 		[
 			'2100656', //# run_1_0
@@ -249,9 +288,9 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['cifar10'],
-			optimizer: ['cwngd lost-sum-not-mean (annealing)'],
-			batch_size: ['128', '512', '1024'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
+			optimizer: ['cwngd'],
+			batchSize: ['128', '512', '1024'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
 	],
@@ -259,6 +298,7 @@ export const rawLoopData = [
 	// Date label: 2023-07-03_18-58-04
 // git: 3a3e99983e93777a858adcd505bdf8cafe73baae
 // cwngd massive lr and damping: lr(9) x damping(9)
+	// loss v5: sum, backprops: no scale, lls: mean, damping no scale
 	[
 		[
 			'2103276', // # run_0
@@ -275,10 +315,10 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['cifar10'],
-			batch_size: ['128'],
-			optimizer: ['cwngd lost-sum-not-mean (annealing)'],
-			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
-			damping: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
+			batchSize: ['128'],
+			optimizer: ['cwngd'],
+			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs', '1/bs', '10/bs', '100/bs', '1000/bs', '10000/bs'],
+			damping: ['1e-4/bs^2', '1e-3/bs^2', '1e-2/bs^2', '1e-1/bs^2', '1/bs^2', '10/bs^2', '100/bs^2', '1000/bs^2', '10000/bs^2'],
 		}
 	],
 	// Date label: 2023-07-03_19-07-38
@@ -290,7 +330,7 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['cifar10'],
-			batch_size: ['128'],
+			batchSize: ['128'],
 			optimizer: ['sgd', 'adam'],
 			learningRate: ['1', '10', '100', '1000'],
 		}
@@ -298,6 +338,7 @@ export const rawLoopData = [
 	// Date label: 2023-07-04_21-00-14
 // git: cb7f31e4be04feaad3213109bd4442726f13a38a
 // cwngd mean grad with various batch size: damping(8) x batch_size(4) x lr(4)
+	// loss v0: mean, backprops: no scale, lls: mean, damping no scale
 	[
 		[
 			'2114256', // # run_0
@@ -319,15 +360,16 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['cifar10'],
-			optimizer: ['cwngd-damp-scaled-up'],
+			optimizer: ['cwngd'],
 			damping: ['1e-6', '1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10'],
-			batch_size: ['32', '64', '128', '1024'],
+			batchSize: ['32', '64', '128', '1024'],
 			learningRate: ['1e-2', '1e-1', '1', '10'],
 		}
 	],
 	// Date label: 2023-07-05_16-40-35
 // git: 66b27f7addae2bf281a7675de250719538c2041f
 // cwngd cifar100: bs(4) x damping(6) x lr(5)
+	// loss v0: mean, backprops: no scale, lls: mean, damping no scale
 	[
 		[
 			'2123117', // # run_0
@@ -336,9 +378,9 @@ export const rawLoopData = [
 			'2123120', // # run_3
 		],
 		{
-			dataset: ['cifar100-resnet56 (non-standard)'],
-			optimizer: ['cwngd-damp-scaled-up'],
-			batch_size: ['32', '64', '128', '1024'],
+			dataset: ['cifar100-resnet56-for-cifar10'], // -resnet56 (non-standard)
+			optimizer: ['cwngd'],
+			batchSize: ['32', '64', '128', '1024'],
 			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
@@ -348,13 +390,16 @@ export const rawLoopData = [
 // git: f86cca85e3646a93996ced02ebce3f85ce10015e
 // cifar100, resnet for cifar100
 // 	cwngd: damping(6)
+	// loss v0: mean, backprops: no scale, lls: mean, damping no scale
 	[
 		[
 			'2125247', // # run_0
 		],
 		{
-			dataset: ['cifar100'],
-			optimizer: ['cwngd-damp-scaled-up'],
+			dataset: ['cifar100'], // resnet50 for cifar100
+			optimizer: ['cwngd'],
+			batchSize: ['32'],
+			learningRate: ['1'],
 			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
 		}
 	],
@@ -376,7 +421,8 @@ export const rawLoopData = [
 		{
 			dataset: ['cifar10'],
 			optimizer: ['kfac', 'adam', 'sgd'], // damping: 1e-2
-			batch_size: ['32', '64', '128', '1024'],
+			batchSize: ['32', '64', '128', '1024'],
+			damping: ['1e-2'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
 	],
@@ -392,6 +438,8 @@ export const rawLoopData = [
 		{
 			dataset: ['cifar100'],
 			optimizer: ['kfac', 'adam', 'sgd'],
+			damping: ['1e-3'],
+			batchSize: ['32'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
 	],
@@ -406,7 +454,9 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['stl10'],
-			optimizer: ['kfac', 'adam', 'sgd'], // damping 1e-3
+			optimizer: ['kfac', 'adam', 'sgd'],
+			damping: ['1e-3'],
+			batchSize: ['32'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
 	],
@@ -420,6 +470,7 @@ export const rawLoopData = [
 		{
 			dataset: ['imagenet'],
 			optimizer: ['sgd'],
+			batchSize: ['32'],
 			learningRate: ['1e-1'],
 		}
 	],
@@ -438,14 +489,16 @@ export const rawLoopData = [
 		{
 			optimizer: ['kfac', 'adam', 'sgd'],
 			dataset: ['mnist'],
-			batch_size: ['32', '64', '128', '1024'],
+			batchSize: ['32', '64', '128', '1024'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1'],
+			damping: ['1e-3'],
 		}
 	],
 
 	// Date label: 2023-07-07_11-23-15
 // git: f0595748243eea9f004c9f4e7f82fd9b652c1cf5
 // cwngd scaling down damping by batch size: batch_size(4) x dataset(3)
+	// loss v6: mean, backprops: no scale, lls: mean, damping scaled down by bs
 	[
 		[
 			'2142274', // # run_0
@@ -453,13 +506,16 @@ export const rawLoopData = [
 		],
 		{
 			optimizer: ['cwngd'],
-			batch_size: ['32', '64', '128', '512', '1024'],
+			damping: ['1/bs'],
+			learningRate: ['1'],
+			batchSize: ['32', '64', '128', '512', '1024'],
 			dataset: ['cifar10', 'cifar100', 'stl10'],
 		}
 	],
 	// Date label: 2023-07-07_12-40-42
 // git: 53a008237c380f6fc8c843bd4e97cdd0fc0be213
 // cwngd try mnist: bs(4) x damp(6) x lr(4)
+	// loss v6: mean, backprops: no scale, lls: mean, damping scaled down by bs
 	[
 		[
 			'2142998', // # run_0
@@ -478,8 +534,8 @@ export const rawLoopData = [
 		{
 			optimizer: ['cwngd'],
 			dataset: ['mnist'],
-			batch_size: ['32', '64', '128', '1024'],
-			damping: ['1e-3', '1e-2', '1e-1', '1', '10', '100'],
+			batchSize: ['32', '64', '128', '1024'],
+			damping: ['1e-3/bs', '1e-2/bs', '1e-1/bs', '1/bs', '10/bs', '100/bs'],
 			learningRate: ['1e-2', '1e-1', '1', '10'],
 		}
 	],
@@ -494,7 +550,9 @@ export const rawLoopData = [
 		{
 			dataset: ['stl10'],
 			optimizer: ['cwngd'],
-			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
+			damping: ['1e-5/bs', '1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs', '1/bs', '10/bs', '100/bs'],
+			batchSize: ['32'],
+			learningRate: ['1'],
 		}
 	],
 ]

@@ -174,13 +174,13 @@ export const palette = [
 	'red', //	#FF0000	255,0,0
 	'green', //	#008000	0,128,0
 	'blue', //	#0000FF	0,0,255
-	'teal', //	#008080	0,128,128
 	'lime', //	#00FF00	0,255,0
 	'aqua', //	#00FFFF	0,255,255
 	'fuchsia', //	#FF00FF	255,0,255
 	'navy', //	#000080	0,0,128
 	'purple', //	#800080	128,0,128
 	'gray', //	#808080	128,128,128
+	'teal', //	#008080	0,128,128
 	// 'black', //	#000000	0,0,0
 	// 'silver', //	#C0C0C0	192,192,192
 	// 'white', //	#FFFFFF	255,255,255
@@ -192,13 +192,13 @@ export const bgPalette = [
 	'bg-[red]', //	#FF0000	255,0,0
 	'bg-[green]', //	#008000	0,128,0
 	'bg-[blue]', //	#0000FF	0,0,255
-	'bg-[teal]', //	#008080	0,128,128
 	'bg-[lime]', //	#00FF00	0,255,0
 	'bg-[aqua]', //	#00FFFF	0,255,255
 	'bg-[fuchsia]', //	#FF00FF	255,0,255
 	'bg-[navy]', //	#000080	0,0,128
 	'bg-[purple]', //	#800080	128,0,128
 	'bg-[gray]', //	#808080	128,128,128
+	'bg-[teal]', //	#008080	0,128,128
 ]
 
 export const lightColors = new Set(['lime'])

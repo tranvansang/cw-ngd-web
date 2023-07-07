@@ -80,7 +80,7 @@
 			.attr('d', ({[key]: yList}) => line(yList))
 			.attr('opacity', strokeOpacity)
 			.attr('stroke', run => getFixedColorOfRun(run)?.[0] ?? (colorizedProp
-				? palette[allProps[colorizedProp].indexOf(run.props[colorizedProp])]
+				? palette[allProps[colorizedProp].indexOf(run.props[colorizedProp]) % palette.length]
 				: 'steelblue')
 			)
 		p.exit()
@@ -166,8 +166,8 @@
 									filteredRunList.filter(({props}) => props[name] === value).length // we check if there is any run with this value first and force the color to be blue. Because if there is no run with this value, there is no need to colorize it.
 										? colorizedProp === name
 											? jcls(
-												bgPalette[allProps[name].indexOf(value)],
-												(!lightColors.has(palette[allProps[name].indexOf(value)]) && 'text-white')
+												bgPalette[allProps[name].indexOf(value) % bgPalette.length],
+												(!lightColors.has(palette[allProps[name].indexOf(value) % palette.length]) && 'text-white')
 											)
 											: 'bg-blue-500 text-white'
 										: 'bg-blue-500 text-red-300' // no data of this filter
