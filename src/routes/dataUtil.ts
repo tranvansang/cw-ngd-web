@@ -324,20 +324,20 @@ export const rawLoopData = [
 			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
 		}
 	],
-	// [
-	// 	[
-	// 		'2125248', // # run_0
-	// 		'2125249'
-	// 	],
-	// 	{
-	// 		dataset: ['cifar100-resnet'],
-	// 		optimizer: ['kfac', 'adam', 'sgd'],
-	// 		learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
-	// 	}
-	// ],
 	[
 		[
-			'2125319 ', // # run_0
+			'2127735', // # run_0
+			'2127736'
+		],
+		{
+			dataset: ['cifar100-resnet'],
+			optimizer: ['kfac', 'adam', 'sgd'],
+			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
+		}
+	],
+	[
+		[
+			'2125319', // # run_0
 		],
 		{
 			dataset: ['stl10'],
@@ -345,15 +345,59 @@ export const rawLoopData = [
 			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
 		}
 	],
-	// [
-	// 	[
-	// 		'2125320', // # run_0
-	// 		'2125321'
-	// 	],
-	// 	{
-	// 		dataset: ['stl10'],
-	// 		optimizer: ['kfac', 'adam', 'sgd'],
-	// 		learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
-	// 	}
-	// ],
+	[
+		[
+			'2125967', // # run_0
+			'2125968'
+		],
+		{
+			dataset: ['stl10'],
+			optimizer: ['kfac', 'adam', 'sgd'],
+			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
+		}
+	],
+	[
+		[
+			'2023-07-06_20-37-36-Dimagenet-Mresnet18-Omsgd-LR0.1-BS256',
+		],
+		{
+			dataset: ['imagenet'],
+			optimizer: ['sgd'],
+			learningRate: ['1e-1'],
+		}
+	],
+	[
+		[
+			'2142274', // # run_0
+			'2142275'
+		],
+		{
+			optimizer: ['cwngd-scaling-damp'],
+			dataset: ['cifar10', 'cifar100', 'stl10'],
+			batch_size: ['32', '64', '128', '512', '1024'],
+		}
+	],
+	[
+		[
+			'2142998', // # run_0
+			'2142999', // # run_1
+			'2143000', // # run_2
+			'2143001', // # run_3
+			'2143002', // # run_4
+			'2143003', // # run_5
+			'2143004', // # run_6
+			'2143005', // # run_7
+			'2143006', // # run_8
+			'2143008', // # run_9
+			'2143010', // # run_10
+			'2143011', // # run_11
+		],
+		{
+			optimizer: ['cwngd-scaling-damp'],
+			dataset: ['mnist'],
+			batch_size: ['32', '64', '128', '1024'],
+			damping: ['1e-3', '1e-2', '1e-1', '1', '10', '100'],
+			learningRate: ['1e-2', '1e-1', '1', '10'],
+		}
+	],
 ]
