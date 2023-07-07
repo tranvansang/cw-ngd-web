@@ -102,7 +102,7 @@
 	}
 
 	let mounted
-	let minY = 0, maxY = 100, minX = 0, maxX = 200
+	let minY = 0, maxY = 100, minX = 0, maxX = 100
 	$: if (minX > maxX) minX = maxX
 	$: if (minY > maxY) minY = maxY
 	function drawAxes() {
@@ -213,10 +213,10 @@
 			Max Y: <input bind:value={maxY} type="range" name="maxY" min="0" max="100" step="1"/> ({maxY})
 		</div>
 		<div>
-			Min X: <input bind:value={minX} type="range" name="minX" min="0" max="200" step="1"/> ({minX})
+			Min X: <input bind:value={minX} type="range" name="minX" min="0" max="100" step="1"/> ({minX})
 		</div>
 		<div>
-			Max X: <input bind:value={maxX} type="range" name="maxX" min="0" max="200" step="1"/> ({maxX})
+			Max X: <input bind:value={maxX} type="range" name="maxX" min="0" max="100" step="1"/> ({maxX})
 		</div>
 	</div>
 	<div>
