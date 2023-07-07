@@ -214,45 +214,47 @@ export const rawLoopData = [
 	// 		'2100661', //# run_1_5
 	// 	],
 	// 	{
-	// 		optimizer: ['cwngd annealing'],
+	// 		dataset: ['cifar10'],
+	// 		optimizer: ['cwngd lost-sum-not-mean (annealing)'],
 	// 		batch_size: ['128', '512', '1024'],
 	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 	// 		damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 	// 	},
 	// ],
-
-	// #Date label: 2023-07-03_18-58-04
-// #git: 3a3e99983e93777a858adcd505bdf8cafe73baae
-// #cwngd massive lr and damping: lr(9) x damping(9)
-// 	[
-// 		[
-// 			'2103276', // # run_0
-// 			'2103277', // # run_1
-// 			'2103278', // # run_2
-// 			'2103279', // # run_3
-// 			'2103280', // # run_4
-// 			'2103281', // # run_5
-// 			'2103282', // # run_6
-// 			'2103283', // # run_7
-// 			'2103284', // # run_8
-// 			'2103285', // # run_9
-// 			'2103286', // # run_10
-// 		],
-// 		{
-// 			optimizer: ['cwngd annealing'],
-// 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
-// 			damping: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
-// 		}
-// 	],
-// 	[
-// 		[
-// 			'2103341', // # run_0
-// 		],
-// 		{
-// 			optimizer: ['sgd', 'adam'],
-// 			learningRate: ['1', '10', '100', '1000'],
-// 		}
-// 	],
+	//
+	// [
+	// 	[
+	// 		'2103276', // # run_0
+	// 		'2103277', // # run_1
+	// 		'2103278', // # run_2
+	// 		'2103279', // # run_3
+	// 		'2103280', // # run_4
+	// 		'2103281', // # run_5
+	// 		'2103282', // # run_6
+	// 		'2103283', // # run_7
+	// 		'2103284', // # run_8
+	// 		'2103285', // # run_9
+	// 		'2103286', // # run_10
+	// 	],
+	// 	{
+	// 		dataset: ['cifar10'],
+	// 		batch_size: ['128'],
+	// 		optimizer: ['cwngd lost-sum-not-mean (annealing)'],
+	// 		learningRate: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
+	// 		damping: ['1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100', '1000', '10000'],
+	// 	}
+	// ],
+	// [
+	// 	[
+	// 		'2103341', // # run_0
+	// 	],
+	// 	{
+	// 		dataset: ['cifar10'],
+	// 		batch_size: ['128'],
+	// 		optimizer: ['sgd', 'adam'],
+	// 		learningRate: ['1', '10', '100', '1000'],
+	// 	}
+	// ],
 	[
 		[
 			'2114256', // # run_0
@@ -274,7 +276,7 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['cifar10'],
-			optimizer: ['cwngd'],
+			optimizer: ['cwngd-damp-scaled-up'],
 			damping: ['1e-6', '1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10'],
 			batch_size: ['32', '64', '128', '1024'],
 			learningRate: ['1e-2', '1e-1', '1', '10'],
@@ -294,7 +296,7 @@ export const rawLoopData = [
 		{
 			dataset: ['cifar10'],
 			batch_size: ['32'],
-			optimizer: ['kfac', 'adam', 'sgd'],
+			optimizer: ['kfac', 'adam', 'sgd'], // damping: 1e-2
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
 	],
@@ -307,8 +309,8 @@ export const rawLoopData = [
 			'2123120', // # run_3
 		],
 		{
-			dataset: ['cifar100'],
-			optimizer: ['cwngd'],
+			dataset: ['cifar100-resnet56 (non-standard)'],
+			optimizer: ['cwngd-damp-scaled-up'],
 			batch_size: ['32', '64', '128', '1024'],
 			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
@@ -319,8 +321,8 @@ export const rawLoopData = [
 			'2125247', // # run_0
 		],
 		{
-			dataset: ['cifar100-resnet'],
-			optimizer: ['cwngd'],
+			dataset: ['cifar100'],
+			optimizer: ['cwngd-damp-scaled-up'],
 			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
 		}
 	],
@@ -330,7 +332,7 @@ export const rawLoopData = [
 			'2127736'
 		],
 		{
-			dataset: ['cifar100-resnet'],
+			dataset: ['cifar100'],
 			optimizer: ['kfac', 'adam', 'sgd'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
@@ -341,7 +343,7 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['stl10'],
-			optimizer: ['cwngd'],
+			optimizer: ['cwngd-damp-scaled-up'], // lr 1
 			damping: ['1e-5', '1e-4', '1e-3', '1e-2', '1e-1', '1', '10', '100'],
 		}
 	],
@@ -352,7 +354,7 @@ export const rawLoopData = [
 		],
 		{
 			dataset: ['stl10'],
-			optimizer: ['kfac', 'adam', 'sgd'],
+			optimizer: ['kfac', 'adam', 'sgd'], // damping 1e-3
 			learningRate: ['1e-3', '1e-2', '1e-1', '1', '10'],
 		}
 	],
@@ -372,7 +374,7 @@ export const rawLoopData = [
 			'2142275'
 		],
 		{
-			optimizer: ['cwngd-scaling-damp'],
+			optimizer: ['cwngd'],
 			dataset: ['cifar10', 'cifar100', 'stl10'],
 			batch_size: ['32', '64', '128', '512', '1024'],
 		}
@@ -393,7 +395,7 @@ export const rawLoopData = [
 			'2143011', // # run_11
 		],
 		{
-			optimizer: ['cwngd-scaling-damp'],
+			optimizer: ['cwngd'],
 			dataset: ['mnist'],
 			batch_size: ['32', '64', '128', '1024'],
 			damping: ['1e-3', '1e-2', '1e-1', '1', '10', '100'],
