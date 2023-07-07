@@ -50,11 +50,11 @@ export const rawLoopData = [
 			'2071792', // msgd_1
 		],
 		{
+			optimizer: ['sgd'],
 			weightDecay: ['0', '1e-4'],
 			momentum: ['0', '0.9', '0.99'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 		},
-		{optimizer: 'msgd'}
 	],
 	// Date label: 2023-06-28_16-22-00
 	// git: 066b5df46f3c25a78394ec6eeca62220579e94ae
@@ -64,10 +64,10 @@ export const rawLoopData = [
 			'2071793', // adam_0
 		],
 		{
+			optimizer: ['adam'],
 			weightDecay: ['0', '1e-4'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 		},
-		{optimizer: 'adam'}
 	],
 
 	// Date label: 2023-07-01_17-28-47
@@ -79,10 +79,10 @@ export const rawLoopData = [
 			'2093572', // cwngd_1
 		],
 		{
+			optimizer: ['cwngd-simplified'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
-		{optimizer: 'cwngd-simplified'}
 	],
 	// Date label: 2023-07-01_17-38-28
 // git: 5b4502ea2a638e4ebc8d24c080d43a7627f7ec7f
@@ -93,10 +93,10 @@ export const rawLoopData = [
 			'2093597', // cwngd_1
 		],
 		{
+			optimizer: ['adam-ngd'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
-		{optimizer: 'adam-ngd'}
 	],
 	// Date label: 2023-07-01_23-17-42
 // git: 727e8920d7bbeb35313ba88f165eaa3c5e1ead98
@@ -107,10 +107,10 @@ export const rawLoopData = [
 			'2095115',
 		],
 		{
+			optimizer: ['kfac'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
-		{optimizer: 'kfac'}
 	],
 	// Date label: 2023-07-02_01-01-31
 // git: 411a734a8e322cd12903532255d2c70db06f789f
@@ -121,10 +121,10 @@ export const rawLoopData = [
 			'2095638',
 		],
 		{
+			optimizer: ['cwngd (fullbackward, old resnet)'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
-		{optimizer: 'cwngd (fullbackward, old resnet)'}
 	],
 	// Date label: 2023-07-02_10-47-32
 // git: a00a03bd39c81999f37c2be55afa2c98e7817a63
@@ -135,10 +135,10 @@ export const rawLoopData = [
 			'2097703',
 		],
 		{
+			optimizer: ['cwngd (out-node, fullbackward)'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
-		{optimizer: 'cwngd (out-node, fullbackward)'}
 	],
 	// Date label: 2023-07-02_10-59-58
 // git: 8ecb97c6fed74a9023661b14032fa07b5c7adb4d
@@ -149,10 +149,10 @@ export const rawLoopData = [
 			'2097740',
 		],
 		{
+			optimizer: ['cwngd (full vmap)'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
 			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
-		{optimizer: 'cwngd (full vmap)'}
 	],
 
 
