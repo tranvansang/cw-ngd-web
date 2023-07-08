@@ -248,7 +248,7 @@ export const rawLoopData = [
 			optimizer: ['cwngd'],
 			batchSize: ['128', '512', '1024'],
 			learningRate: ['1e-4', '1e-3', '1e-2', '1e-1'],
-			damping: ['e-3', 'e-4', 'e-5', 'e-6'],
+			damping: ['1e-3', '1e-4', '1e-5', '1e-6'],
 		},
 	],
 	// Date label: 2023-07-03_09-18-51
