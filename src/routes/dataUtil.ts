@@ -34,6 +34,7 @@ export function* gen_run_list(
 		const data = rawData[jids[base >> 3]]?.[base & 7]
 		if (data) yield {
 			...parseRun(data),
+			runName: `${jids[base >> 3]}.${base & 7}`,
 			props,
 		}
 	}
@@ -85,23 +86,6 @@ export const rawLoopData = [
 		],
 		{
 			optimizer: ['cwngd'],
-			dataset: ['cifar10'],
-			batchSize: ['128'],
-			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
-			damping: ['1e-3/bs^2', '1e-4/bs^2', '1e-5/bs^2', '1e-6/bs^2'],
-		},
-	],
-	// Date label: 2023-07-01_17-38-28
-// git: 5b4502ea2a638e4ebc8d24c080d43a7627f7ec7f
-// cwngd (try adam-ngd): lr(4) x damping(4)
-	// loss v1: sum, backprops: no scaled up, lls: mean, damping no scaling
-	[
-		[
-			'2093595', // cwngd_0
-			'2093597', // cwngd_1
-		],
-		{
-			optimizer: ['adam-ngd'],
 			dataset: ['cifar10'],
 			batchSize: ['128'],
 			learningRate: ['1e-4/bs', '1e-3/bs', '1e-2/bs', '1e-1/bs'],
@@ -470,7 +454,7 @@ export const rawLoopData = [
 		{
 			dataset: ['imagenet'],
 			optimizer: ['sgd'],
-			batchSize: ['32'],
+			batchSize: ['1024'],
 			learningRate: ['1e-1'],
 		}
 	],
@@ -555,4 +539,79 @@ export const rawLoopData = [
 			learningRate: ['1'],
 		}
 	],
+	[
+		[
+			'2023-07-08_07-14-56-Dimagenet-Oadam',
+		],
+		{
+			dataset: ['imagenet'],
+			optimizer: ['adam'],
+			batchSize: ['1024'],
+			learningRate: ['1e-3'],
+		}
+	],
+
+	[
+		[
+			'2167066', // # run_0
+			'2167067', // # run_1
+			'2167068', // # run_2
+			'2167069', // # run_3
+			'2167070', // # run_4
+			'2167071', // # run_5
+			'2167072', // # run_6
+			'2167073', // # run_7
+			'2167074', // # run_8
+			'2167075', // # run_9
+			'2167076', // # run_10
+			'2167077', // # run_11
+			'2167078', // # run_12
+			'2167079', // # run_13
+			'2167080', // # run_14
+			'2167081', // # run_15
+		],
+		{
+			optimizer: ['adam-ngd'],
+			dataset: ['cifar10'],
+			batchSize: ['32', '64', '128', '1024'],
+			damping: ['1e-8', '1e-6', '1e-4', '1e-3'],
+			strategy: ['full', 'inout-node'],
+			learningRate: ['1e-3', '1e-2', '1e-1', '1'],
+		},
+	],
+	[
+		[
+			'2167300', // # run_0
+			'2167301', // # run_1
+			'2167302', // # run_2
+			'2167303', // # run_3
+			'2167304', // # run_4
+			'2167305', // # run_5
+			'2167307', // # run_6
+			'2167309', // # run_7
+			'2167311', // # run_8
+			'2167313', // # run_9
+			'2167315', // # run_10
+			'2167317', // # run_11
+			'2167319', // # run_12
+			'2167321', // # run_13
+			'2167323', // # run_14
+			'2167325', // # run_15
+		],
+		{
+			optimizer: ['adam-ngd'],
+			dataset: ['cifar10'],
+			batchSize: ['32', '64', '128', '1024'],
+			damping: ['1e-8', '1e-6', '1e-4', '1e-3'],
+			strategy: ['out-node', 'inout-node'],
+			learningRate: ['1e-3', '1e-2', '1e-1', '1'],
+		},
+	],
 ]
+// list
+export const runList = rawLoopData.flatMap(([jids, matrix, props = {}]) => [...gen_run_list(jids, matrix, props)])
+export type Condition = Record<string, Set<string>>
+
+export function isRunMatchedCondition(condition: Condition, {props}: RunPayload) {
+	return Object.entries(props).every(([key, value]) => condition[key]?.has?.(value))
+}

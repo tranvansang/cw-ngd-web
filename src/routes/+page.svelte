@@ -3,16 +3,11 @@
 	import {onMount} from 'svelte'
 	import * as d3 from 'd3'
 	import {bgPalette, lightColors, palette, tableauPalette} from './color'
-	import type {RunPayload} from './dataUtil'
-	import {gen_run_list, rawLoopData} from './dataUtil'
+	import type {Condition} from './dataUtil'
+	import {isRunMatchedCondition, runList} from './dataUtil'
 	import type {ChartPayload} from './d3'
 	import {makeAxes, makeChartFrame} from './d3'
 	import jcls from 'jcls'
-
-	// list
-	const runList = rawLoopData.flatMap(([jids, matrix, props = {}]) => [...gen_run_list(jids, matrix, props)])
-
-	type Condition = Record<string, Set<string>>
 
 	// collect properties
 	const allProps: Record<string, string[]> = {}
@@ -36,9 +31,6 @@
 
 	let forcedColorizedProp
 	let selectedPropValues = Object.fromEntries(Object.entries(allProps).map(([key, values]) => [key, new Set(values)]))
-	function isRunMatchedCondition(condition: Condition, {props}: RunPayload) {
-		return Object.entries(props).every(([key, value]) => condition[key].has(value))
-	}
 	$: filteredRunList = runList.filter(isRunMatchedCondition.bind(null, selectedPropValues))
 	// first prop with multiple selected values
 	$: colorizedProp = forcedColorizedProp ?? Object

@@ -9,6 +9,23 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true
+	},
+	"include": [
+		"./.svelte-kit/ambient.d.ts",
+		"./.svelte-kit/types/**/$types.d.ts",
+		"./.svelte-kit/vite.config.ts",
+		"./src/**/*.js",
+		"./src/**/*.ts",
+		"./src/**/*.svelte",
+		"./tests/**/*.js",
+		"./tests/**/*.ts",
+		"./tests/**/*.svelte",
+		"./src/exec-find-run.ts"
+	],
+	"ts-node": {
+		"esm": true,
+		"transpileOnly": true,
+		"experimentalSpecifierResolution": "node"
 	}
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
