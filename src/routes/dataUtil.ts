@@ -627,9 +627,9 @@ export const rawLoopData = [
 			'2171276', // # run_6
 			'2171277', // # run_7
 			'2171278', // # run_8
+			// #adam-ngd (cifar100): ds(2) x size(3) x damping(3) x strategy(1) x lr(4)
 		],
 		{
-			// #adam-ngd: batch_size(4) x damping(4) x strategy(1) x lr(4)
 			optimizer: ['keep-last-ngd'],
 			dataset: ['cifar100', 'stl10'],
 			size: ['10', '50', '100'],
@@ -653,11 +653,32 @@ export const rawLoopData = [
 			'2171695', // # run_11
 		],
 		{
-			// #adam-ngd: batch_size(4) x damping(4) x strategy(1) x lr(4)
+			// #adam-ngd (cifar100, don't train first steps): ds(2) x size(3) x damping(2) x strategy(2) x lr(4)
 			optimizer: ['adam-ngd-drop-firsts'],
 			dataset: ['cifar100', 'stl10'],
-			damping: ['1e-8', '1e-6', '1e-4'],
+			size: ['10', '50', '100'],
+			damping: ['1e-8', '1e-6'],
 			strategy: ['full', 'inout-node'],
+			learningRate: ['1e-3', '1e-2', '1e-1', '1'],
+		},
+	],
+	[
+		[
+			'2176225', // # run_0
+			'2176226', // # run_1
+			'2176227', // # run_2
+			'2176228', // # run_3
+			'2176229', // # run_4
+			'2176230', // # run_5
+		],
+		{
+			// #adam-ngd (cifar100, don't train first steps): ds(2) x size(3) x damping(2) x strategy(2) x lr(4)
+			optimizer: ['adam-ngd-adam-like-or-not'],
+			adamLike: ['yes', 'no'],
+			dataset: ['cifar10'],
+			size: ['8', '16', '32'],
+			damping: ['1e-8', '1e-6'],
+			strategy: ['full'],
 			learningRate: ['1e-3', '1e-2', '1e-1', '1'],
 		},
 	],
